@@ -1,4 +1,4 @@
-
+import {cart} from '../data/cart.js'
 let productsHtml=''
 
 products.forEach((product)=>{
@@ -43,7 +43,7 @@ productsHtml+= `
 
 <div class="product-spacer"></div>
 
-<div class="added-to-cart">
+<div class="added-to-cart" style="display: none; >
   <img src="images/icons/checkmark.png">
   Added
 </div>
@@ -54,10 +54,13 @@ productsHtml+= `
 </div>`
 
 });
+
+
 document.querySelector('.js-products-container').innerHTML=productsHtml;
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
   button.addEventListener('click',()=>{
 const productId=button.dataset.productId;
+
 let matching;
 cart.forEach((item)=>{
 
@@ -74,7 +77,20 @@ if(matching){
   });
 
 }
+let cartQuantity=0;
+cart.forEach((item)=>{
+cartQuantity+=item.quantity;
 
+});
+document.querySelector('.js-cart-button').innerHTML=cartQuantity;
+
+const addedMessage = button.previousElementSibling;
+addedMessage.style.display = 'block';
+
+// Optionally, hide the message after a few seconds
+setTimeout(() => {
+  addedMessage.style.display = 'none';
+}, 2000);
 
 console.log(cart)
     
